@@ -17,7 +17,7 @@ public class Latihan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tulis);
         ImageView imageView = findViewById(R.id.gambar);
-        Glide.with(this).load(R.mipmap.ba1).into(imageView);
+        Glide.with(this).load(R.mipmap.ja1).into(imageView);
     }
 
 
