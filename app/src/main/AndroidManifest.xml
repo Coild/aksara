@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IrwanTA"
         android:usesCleartextTraffic="true">
-<!--        <activity android:name=".MainActivity"/>-->
+        <activity android:name=".CanvasActivity"/>
         <activity android:name=".SplashScreen"/>
         <activity android:name=".Latihan"/>
         <activity android:name=".MainActivity"/>

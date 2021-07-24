@@ -52,7 +52,7 @@
             android:layout_height="50dp">
 
             <Button
-                android:id="@+id/game_clear_btn"
+                android:id="@+id/clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="75dp"
@@ -60,7 +60,7 @@
                 android:text="Hapus" />
 
             <Button
-                android:id="@+id/game_ok_btn"
+                android:id="@+id/tes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ok" />

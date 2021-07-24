@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/keluar"
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_marginBottom="151dp"
@@ -14,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/belajar" />
 
     <Button
         android:id="@+id/button"
@@ -23,20 +23,20 @@
         android:layout_marginTop="246dp"
         android:layout_marginBottom="54dp"
         android:text="Latihan"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/belajar"
+        app:layout_constraintEnd_toEndOf="@+id/belajar"
+        app:layout_constraintStart_toStartOf="@+id/belajar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/belajar"
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_marginBottom="55dp"
         android:text="Belajar"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintEnd_toEndOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/keluar"
+        app:layout_constraintEnd_toEndOf="@+id/keluar"
+        app:layout_constraintStart_toStartOf="@+id/keluar"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

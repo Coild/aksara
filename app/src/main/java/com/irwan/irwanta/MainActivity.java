@@ -43,200 +43,176 @@ public class MainActivity extends AppCompatActivity {
 
 //    public static final String URL = "http://192.168.44.193:5000/";
 
-    private Button mBtImageSelect;
-    private Button mBtImageShow;
-    private ProgressBar mProgressBar;
-    private TextView tvClass;
-    private TextView tvProb;
-    private ImageView imageView;
-    private String mImageUrl = "";
-    private byte[] imageBytes;
+    private Button belajar, latihan, keluar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
-//        initViews();
+        initViews();
 
     }
 
     private void initViews() {
 
-        mBtImageSelect = findViewById(R.id.btn_select_image);
-        mBtImageShow = findViewById(R.id.btn_show_image);
-        mProgressBar = findViewById(R.id.progress);
-        tvClass = findViewById(R.id.textView);
-        tvProb = findViewById(R.id.textView2);
-        imageView = findViewById(R.id.imageView);
-
-        mBtImageSelect.setOnClickListener((View view) -> {
-
-            mBtImageShow.setVisibility(View.GONE);
-
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/jpeg");
-
-            try {
-                startActivityForResult(intent, INTENT_REQUEST_CODE);
-
-            } catch (ActivityNotFoundException e) {
-
-                e.printStackTrace();
-            }
-
+        latihan = findViewById(R.id.button);
+        belajar = findViewById(R.id.belajar);
+        keluar = findViewById(R.id.keluar);
+        keluar.setOnClickListener((View view) -> {
+           finish();
+           System.exit(0);
         });
 
-        mBtImageShow.setOnClickListener(view -> {
+        belajar.setOnClickListener((View view) -> {
+            Intent intent = new Intent(MainActivity.this,CanvasActivity.class);
+            startActivity(intent);
+        });
 
-            Snackbar.make(findViewById(R.id.content), mImageUrl,Snackbar.LENGTH_SHORT).show();
-
-//            Intent intent = new Intent(Intent.ACTION_VIEW);
-//            intent.setData(Uri.parse(mImageUrl));
-//            startActivity(intent);
-
+        latihan.setOnClickListener((View view) -> {
+            Intent intent = new Intent(MainActivity.this,CanvasActivity.class);
+            startActivity(intent);
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == INTENT_REQUEST_CODE) {
-
-            if (resultCode == RESULT_OK && data.getData()!=null) {
-                try {
-                    Uri pickedImage = data.getData();
-                    String[] filePath = { MediaStore.Images.Media.DATA };
-                    Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
-                    cursor.moveToFirst();
-                    String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-
-//                    BitmapFactory.Options options = new BitmapFactory.Options();
-//                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
-//                    imageView.setImageBitmap(bitmap);
-
-                    InputStream is = getContentResolver().openInputStream(data.getData());
-
-//                    AsyncTaskExample asyncTask=new AsyncTaskExample();
-//                    asyncTask.execute("https://www.tutorialspoint.com/images/tp-logo-diamond.png");
-
-                    File file = new File(imagePath);
-
-                    uploadImage(getBytes(is));
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == INTENT_REQUEST_CODE) {
+//
+//            if (resultCode == RESULT_OK && data.getData()!=null) {
+//                try {
+//                    Uri pickedImage = data.getData();
+//                    String[] filePath = { MediaStore.Images.Media.DATA };
+//                    Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
+//                    cursor.moveToFirst();
+//                    String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+//
+////                    BitmapFactory.Options options = new BitmapFactory.Options();
+////                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+////                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+////                    imageView.setImageBitmap(bitmap);
+//
+//                    InputStream is = getContentResolver().openInputStream(data.getData());
+//
+////                    AsyncTaskExample asyncTask=new AsyncTaskExample();
+////                    asyncTask.execute("https://www.tutorialspoint.com/images/tp-logo-diamond.png");
+//
+//                    File file = new File(imagePath);
+//
 //                    uploadImage(getBytes(is));
-//                    uploadImageNew(getBytes(is));
-
-                    Log.d(TAG, "succeddddd: ");
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public byte[] getBytes(InputStream is) throws IOException {
-        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
-
-        int buffSize = 1024;
-        byte[] buff = new byte[buffSize];
-
-        int len = 0;
-        while ((len = is.read(buff)) != -1) {
-            byteBuff.write(buff, 0, len);
-        }
-
-        return byteBuff.toByteArray();
-    }
-
-    private void uploadImage(byte[] imageBytes) {
-
-        Retrofit retrofit = NetworkClient.getRetrofit();
-        RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
-
-//        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
-//        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/  form-data"), imageBytes);
-//        MultipartBody.Part body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
-
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), imageBytes);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("image", "image.jpg", requestBody);
-//        retrofitInterface.uploadImage(body);
-        Call<Response> call = retrofitInterface.uploadImage(body);
-        mProgressBar.setVisibility(View.VISIBLE);
-        Log.d(TAG, "sukses uploadImage: ");
-
-        call.enqueue(new Callback<Response>() {
-            @Override
-            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-
-                mProgressBar.setVisibility(View.GONE);
-
-                if (response.isSuccessful()) {
-                    Response responseBody = response.body();
-//                    mBtImageShow.setVisibility(View.VISIBLE);
-                    tvClass.setText("Class: "+ responseBody.getClassnya());
-                    tvProb.setText("Prob: "+ Arrays.toString(responseBody.getProb()));
-
-                    String classnya = responseBody.getClassnya();
-                    Log.d(TAG, "classnya nih: "+ classnya );
-                    Log.d(TAG, "probnya nih: "+ Arrays.toString(responseBody.getProb()));
-
-                } else {
-                    Log.d(TAG, "gagal nih: ");
-                    ResponseBody errorBody = response.errorBody();
-
-                    Gson gson = new Gson();
-
-                    try {
-                        Response errorResponse = gson.fromJson(errorBody.string(), Response.class);
-                        Snackbar.make(findViewById(R.id.content), errorResponse.getClassnya(),Snackbar.LENGTH_SHORT).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Response> call, Throwable t) {
-
-                mProgressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onFailure: "+t.getLocalizedMessage());
-            }
-        });
-
+////                    uploadImage(getBytes(is));
+////                    uploadImageNew(getBytes(is));
+//
+//                    Log.d(TAG, "succeddddd: ");
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
+//
+//    public byte[] getBytes(InputStream is) throws IOException {
+//        ByteArrayOutputStream byteBuff = new ByteArrayOutputStream();
+//
+//        int buffSize = 1024;
+//        byte[] buff = new byte[buffSize];
+//
+//        int len = 0;
+//        while ((len = is.read(buff)) != -1) {
+//            byteBuff.write(buff, 0, len);
+//        }
+//
+//        return byteBuff.toByteArray();
+//    }
+//
+//    private void uploadImage(byte[] imageBytes) {
+//
+//        Retrofit retrofit = NetworkClient.getRetrofit();
+//        RetrofitInterface retrofitInterface = retrofit.create(RetrofitInterface.class);
+//
+////        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
+////        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/  form-data"), imageBytes);
+////        MultipartBody.Part body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile);
+//
+//        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), imageBytes);
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("image", "image.jpg", requestBody);
+////        retrofitInterface.uploadImage(body);
+//        Call<Response> call = retrofitInterface.uploadImage(body);
+//        mProgressBar.setVisibility(View.VISIBLE);
 //        Log.d(TAG, "sukses uploadImage: ");
-    }
-
-
-    private class AsyncTaskExample extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-//            p = new ProgressDialog(MainActivity.this);
-//            p.setMessage("Please wait...It is downloading");
-//            p.setIndeterminate(false);
-//            p.setCancelable(false);
-//            p.show();
-        }
-        @Override
-        protected String doInBackground(String... strings) {
-            //                ImageUrl = new URL(strings[0]);
-//                HttpURLConnection conn = (HttpURLConnection) ImageUrl.openConnection();
-//                conn.setDoInput(true);
-//                conn.connect();
-//                is = conn.getInputStream();
-//                BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inPreferredConfig = Bitmap.Config.RGB_565;
-//                bmImg = BitmapFactory.decodeStream(is, null, options);
-            return "bmImg";
-        }
-
-    }
+//
+//        call.enqueue(new Callback<Response>() {
+//            @Override
+//            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+//
+//                mProgressBar.setVisibility(View.GONE);
+//
+//                if (response.isSuccessful()) {
+//                    Response responseBody = response.body();
+////                    mBtImageShow.setVisibility(View.VISIBLE);
+//                    tvClass.setText("Class: "+ responseBody.getClassnya());
+//                    tvProb.setText("Prob: "+ Arrays.toString(responseBody.getProb()));
+//
+//                    String classnya = responseBody.getClassnya();
+//                    Log.d(TAG, "classnya nih: "+ classnya );
+//                    Log.d(TAG, "probnya nih: "+ Arrays.toString(responseBody.getProb()));
+//
+//                } else {
+//                    Log.d(TAG, "gagal nih: ");
+//                    ResponseBody errorBody = response.errorBody();
+//
+//                    Gson gson = new Gson();
+//
+//                    try {
+//                        Response errorResponse = gson.fromJson(errorBody.string(), Response.class);
+//                        Snackbar.make(findViewById(R.id.content), errorResponse.getClassnya(),Snackbar.LENGTH_SHORT).show();
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Response> call, Throwable t) {
+//
+//                mProgressBar.setVisibility(View.GONE);
+//                Log.d(TAG, "onFailure: "+t.getLocalizedMessage());
+//            }
+//        });
+//
+////        Log.d(TAG, "sukses uploadImage: ");
+//    }
+//
+//
+//    private class AsyncTaskExample extends AsyncTask<String, String, String> {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+////            p = new ProgressDialog(MainActivity.this);
+////            p.setMessage("Please wait...It is downloading");
+////            p.setIndeterminate(false);
+////            p.setCancelable(false);
+////            p.show();
+//        }
+//        @Override
+//        protected String doInBackground(String... strings) {
+//            //                ImageUrl = new URL(strings[0]);
+////                HttpURLConnection conn = (HttpURLConnection) ImageUrl.openConnection();
+////                conn.setDoInput(true);
+////                conn.connect();
+////                is = conn.getInputStream();
+////                BitmapFactory.Options options = new BitmapFactory.Options();
+////                options.inPreferredConfig = Bitmap.Config.RGB_565;
+////                bmImg = BitmapFactory.decodeStream(is, null, options);
+//            return "bmImg";
+//        }
+//
+//    }
 
 
 }

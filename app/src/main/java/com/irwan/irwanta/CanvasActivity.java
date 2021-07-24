@@ -58,7 +58,7 @@ public class CanvasActivity extends Activity {
                         "Latihan",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent gas = new Intent(CanvasActivity.this,Latihan.class);
+                                Intent gas = new Intent(CanvasActivity.this,Signature.class);
                                 gas.putExtra("nama","ha");
                                 startActivity(gas);
                             }
