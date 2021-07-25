@@ -35,7 +35,7 @@ public class Latihan extends AppCompatActivity {
     String target;
     Button clearBtn, verifyBtn;
     private WriteCanvas wv;
-    TextView klas;
+    TextView klas,huruf;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +44,12 @@ public class Latihan extends AppCompatActivity {
         verifyBtn = findViewById(R.id.tes);
         wv = findViewById(R.id.writecanvas);
         klas = findViewById(R.id.kelas);
+        huruf = findViewById(R.id.huruf);
         if(getIntent().getExtras()!=null){
 
             Bundle bundle = getIntent().getExtras();
             target = bundle.getString("nama");
+            huruf.setText(target);
             Log.d("target",target);
         }
         if (target.equals("ha")){

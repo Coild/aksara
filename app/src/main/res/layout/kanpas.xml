@@ -17,9 +17,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:textAlignment="center"
+            android:textSize="75dp"
+            android:id="@+id/huruf">
+
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/darker_gray"
             android:gravity="center_vertical|center_horizontal"
@@ -35,22 +43,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:background="@android:color/darker_gray"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/gambar">
-                
-            </ImageView>
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

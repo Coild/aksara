@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
 //    public static final String URL = "http://192.168.44.193:5000/";
 
-    private Button belajar, latihan, keluar;
+    private Button belajar, keluar;
 
 
     @Override
@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViews() {
 
-        latihan = findViewById(R.id.button);
         belajar = findViewById(R.id.belajar);
         keluar = findViewById(R.id.keluar);
         keluar.setOnClickListener((View view) -> {
@@ -70,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        latihan.setOnClickListener((View view) -> {
-            Intent intent = new Intent(MainActivity.this,CanvasActivity.class);
-            startActivity(intent);
-        });
     }
 
 //    @Override

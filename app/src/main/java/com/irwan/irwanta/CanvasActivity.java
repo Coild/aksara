@@ -39,6 +39,7 @@ public class CanvasActivity extends Activity {
         ya = findViewById(R.id.btn_ya);
         nya = findViewById(R.id.btn_nya);
 
+
         ha.setOnClickListener(new View.OnClickListener()   {
             public void onClick(View v)  {
                 Log.e("ini","ha");

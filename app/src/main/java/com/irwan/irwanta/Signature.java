@@ -40,7 +40,7 @@ import static android.content.ContentValues.TAG;
 public class Signature extends AppCompatActivity {
 
     private WriteCanvas wv;
-    private TextView tv,times, klas;
+    private TextView tv,times, klas,huruf;
     Button clearBtn, verifyBtn;
     String target;
     DecimalFormat df = new DecimalFormat("#.##");
@@ -55,6 +55,7 @@ public class Signature extends AppCompatActivity {
                 1002);
         setContentView(R.layout.kanpas);
         klas = findViewById(R.id.kelas);
+        huruf = findViewById(R.id.huruf);
         clearBtn = findViewById(R.id.game_clear_btn);
         wv = findViewById(R.id.writecanvas);
         verifyBtn = findViewById(R.id.game_ok_btn);
@@ -62,6 +63,7 @@ public class Signature extends AppCompatActivity {
 
             Bundle bundle = getIntent().getExtras();
             target = bundle.getString("nama");
+            huruf.setText(target);
             Log.d("target",target);
         }
 
